@@ -10,3 +10,6 @@ build:
     - gem install sass
     - npm install
     - npm test
+    - echo 'CI running'
+ on_succes:
+    - git push https://git.heroku.com/stormy-shelf-52929.git master
