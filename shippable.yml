@@ -4,12 +4,23 @@ node_js:
   - 5.3
 
 build:
+  before_install:
+  - which heroku || wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+
   ci:
+    - sudo apt-get install software-properties-common # debian only
+    - sudo add-apt-repository "deb https://cli-assets.heroku.com/branches/stable/apt ./"
+    - curl -L https://cli-assets.heroku.com/apt/release.key | sudo apt-key add -
+    - sudo apt-get update
+    - sudo apt-get install heroku
     - sudo apt-get install ruby-full
     - npm install nsp
     - gem install sass
     - npm install
     - npm test
     - echo 'CI running'
-  on_success:
-    - git push https://git.heroku.com/stormy-shelf-52929.git master
+  after_success:
+  - test -f ~/.ssh/id_rsa.heroku || ssh-keygen -y -f /tmp/ssh/00_sub > ~/.ssh/id_rsa.heroku && heroku keys:add ~/.ssh/id_rsa.heroku  
+  - git remote -v | grep ^heroku || heroku git:remote --ssh-git --app shippable-heroku-1001
+  - git push -f heroku master
+  - node node_modules/slack-shippable/index.js -s
