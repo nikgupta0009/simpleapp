@@ -5,7 +5,7 @@ node_js:
 
 build:
   pre_ci:
-    - npm install gem
+    - sudo apt-get install ruby-full
     - npm install nsp
     - gem install sass
   ci:
