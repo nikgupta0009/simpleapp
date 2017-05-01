@@ -7,6 +7,7 @@ build:
   pre_ci:
     - npm install gem
     - npm install nsp
+    - gem install sass
   ci:
     - npm install
     - npm test
