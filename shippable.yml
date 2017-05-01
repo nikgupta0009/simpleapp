@@ -1,0 +1,12 @@
+language: node_js
+
+node_js:
+  - 5.3
+
+build:
+  pre_ci:
+    - npm install gem
+    - npm install nsp
+  ci:
+    - npm install
+    - npm test
