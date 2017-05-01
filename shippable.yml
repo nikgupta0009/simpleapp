@@ -10,12 +10,12 @@ build:
     - secure:
   
 before_install:
-  - which heroku || wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
-
-ci:
   - sudo apt-get install ruby-full
   - npm install nsp
   - gem install sass
+  - which heroku || wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+
+ci:
   - npm install
   - bower install
   - npm test
